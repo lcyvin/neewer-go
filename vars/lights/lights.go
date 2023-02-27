@@ -1,31 +1,31 @@
-package lights
+package neewerlights
 
 import (
 	"regexp"
   "fmt"
 
-	"github.com/lcyvin/go-neewer/types"
+	"github.com/lcyvin/go-neewer/types/light"
 )
 
 type KnownModelStruct struct {
-  Models []*types.NeewerLight
+  Models []*light.NeewerLight
 }
 
-func (km KnownModelStruct) MatchModel(name string) (types.NeewerLight, error) {
+func (km KnownModelStruct) MatchModel(name string) (light.NeewerLight, error) {
   for _,model := range km.Models {
     if model.NameMatchPattern.MatchString(name) {
       return *model, nil
     }
   }
 
-  return types.NeewerLight{}, fmt.Errorf("no match found")
+  return light.NeewerLight{}, fmt.Errorf("no match found")
 }
 
-var LightPatterns map[*regexp.Regexp]types.NeewerLight = map[*regexp.Regexp]types.NeewerLight{
+var LightPatterns map[*regexp.Regexp]light.NeewerLight = map[*regexp.Regexp]light.NeewerLight{
   SL90.NameMatchPattern: SL90,
 }
 
-var SL90 types.NeewerLight = types.NeewerLight{
+var SL90 light.NeewerLight = light.NeewerLight{
   Model: "Neewer SL90 RGB",
   HSISupport: true,
   ANMSupport: true,

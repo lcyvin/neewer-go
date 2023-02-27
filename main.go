@@ -8,7 +8,7 @@ import (
 )
 
 func main(){
-  matchPatterns := []*regexp.Regexp{lights.SL90.NameMatchPattern}
+  matchPatterns := []*regexp.Regexp{neewerlights.SL90.NameMatchPattern}
   knownLights := []string{}
 
   scanResults, err := bluetooth.Scan(matchPatterns, knownLights, 10, true)
@@ -17,4 +17,16 @@ func main(){
   }
 
   fmt.Println(scanResults[0].LocalName())
+  fmt.Println(scanResults[0].Address.String())
+
+  fmt.Println("scanning for specific device...")
+  specificScan := "E4:AF:00:CB:49:96"
+  res, err := bluetooth.ScanForMacAddress(specificScan, 20)
+  if err != nil {
+    fmt.Println(err)
+  }
+  
+  if res != nil {
+    fmt.Println(res.LocalName())
+  }
 }
